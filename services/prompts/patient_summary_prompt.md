@@ -8,18 +8,16 @@ You will be provided with:
 
 ## OUTPUT FORMAT
 
-Generate a structured patient summary with the following two sections:
+  Return only a valid JSON object with no additional text, markdown, or code fences.
+  Do not wrap the response in code fences. Do not include ```json. Output raw
+  JSON only. Your entire response must start with { and end with }. The json should look like the following example.
 
----
+  {
+    "patient_info": "Last, First — DOB: MM/DD/YYYY",
+    "patient_summary": "Narrative text here..."
+  }
 
-### Patient: [Last Name], [First Name]
-**DOB:** MM/DD/YYYY  
-
----
-
-### Clinical Narrative
-
-Write a cohesive, chronological narrative summarizing the patient's clinical history as documented in the provided notes. The narrative should:
+  For patient_summary Write a cohesive, chronological narrative summarizing the patient's clinical history as documented in the provided notes. The narrative should:
 
 - Flow as professional prose — avoid bullet points or raw data dumps
 - Organize information chronologically by note date, oldest to most recent

@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from db.note_repository import get_notes_by_patient_id
 from db.patient_repository import get_patient_by_id
+from models.summary import AISummary
 
 PROMPT_PATH = Path(__file__).parent / "prompts" / "patient_summary_prompt.md"
 PATIENT_SUMMARY_PROMPT = PROMPT_PATH.read_text(encoding="utf-8")
@@ -34,4 +35,17 @@ def get_summary(session: Session, id: int):
         system=PATIENT_SUMMARY_PROMPT,
         messages=[{"role": "user", "content": user_message}],
     )
-    return response.content[0]
+
+    block = response.content[0]
+    if block.type != "text":
+        raise ValueError("Unexpected response from Claude")
+
+    text = (
+        block.text.strip()
+        .removeprefix("```json")
+        .removeprefix("```")
+        .removesuffix("```")
+        .strip()
+    )
+
+    return AISummary.model_validate_json(text)
