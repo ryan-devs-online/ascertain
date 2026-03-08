@@ -38,10 +38,16 @@ def health():
 
 
 @app.get("/patients")
-def get_patients(session: Session = Depends(get_session)):
+def get_patients(
+    session: Session = Depends(get_session),
+    page: int = 1,
+    page_size: int = 20,
+    sort_by: str = "last_name",
+    sort_order: str = "asc",
+):
     """Return all patients in the database along with information about them. This is a paginated endpoint.
-    Sorted by last_name by default, but can also be sorted by first_name, or id"""
-    return get_all_patients(session)
+    Sorted by last_name by default, but can also be sorted by first_name, or id in asc or desc order."""
+    return get_all_patients(session, page, page_size, sort_by, sort_order)
 
 
 @app.get("/patients/{id}")
