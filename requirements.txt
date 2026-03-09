@@ -13,6 +13,6 @@ typing-inspection==0.4.2
 uvicorn==0.41.0
 anthropic==0.84.0
 python-dotenv==1.2.2
-psycopg2-binary==2.9.11
+psycopg[binary]==3.3.3
 python-multipart==0.0.22
 sqlalchemy==2.0.48
